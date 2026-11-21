@@ -82,7 +82,7 @@ profile/                  profil archiso commun (dérivé de "baseline")
   profiledef.sh           nom, modes de boot, compression
   packages.common         paquets communs
   symlinks.txt            liens (services systemd activés…), recréés au build
-  grub/ syslinux/         menus de démarrage UEFI (GRUB) / BIOS
+  efiboot/ syslinux/      menus de démarrage UEFI / BIOS
   airootfs/               fichiers copiés dans le système
 variants/<nom>/           variant.conf (noyau, paramètres) + packages
 scripts/build-aur.sh      compile les paquets AUR dans un dépôt local
