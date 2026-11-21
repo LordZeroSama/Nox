@@ -1,0 +1,7 @@
+[Desktop Entry]
+Type=Application
+Name=Minecraft (Prism)
+Comment=Prism Launcher sur le GPU dedie avec GameMode
+Exec=nox-run prismlauncher
+Icon=applications-games
+Categories=Game;

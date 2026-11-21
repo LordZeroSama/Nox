@@ -1,0 +1,52 @@
+#!/usr/bin/env bash
+# Nox OS - create the persistent data partition (NOXHOME) in the free space
+# that follows the NOXBOOT partition on the same disk. Never touches other disks.
+set -euo pipefail
+
+[[ $EUID -eq 0 ]] || { echo "Lance avec : sudo nox-setup-home"; exit 1; }
+
+if blkid -L NOXHOME >/dev/null 2>&1; then
+    echo "Une partition NOXHOME existe deja : $(blkid -L NOXHOME). Rien a faire."
+    exit 0
+fi
+
+boot_part="$(blkid -L NOXBOOT || true)"
+[[ -n "$boot_part" ]] || { echo "Partition NOXBOOT introuvable. Abandon."; exit 1; }
+disk="/dev/$(lsblk -no PKNAME "$boot_part")"
+
+echo "Disque Nox detecte : $disk"
+lsblk -o NAME,SIZE,FSTYPE,LABEL "$disk"
+echo
+# Largest free region on the disk (sectors): "start size"
+read -r free_start free_sectors < <(sfdisk --list-free "$disk" \
+    | awk '$1 ~ /^[0-9]+$/ && $3 > max {max=$3; start=$1} END {print start+0, max+0}')
+sector_size="$(blockdev --getss "$disk")"
+free_bytes=$(( free_sectors * sector_size ))
+echo "Plus grand espace libre : $((free_bytes / 1024 / 1024 / 1024)) Go"
+(( free_bytes > 2 * 1024 * 1024 * 1024 )) || { echo "Pas assez d'espace libre (2 Go minimum)."; exit 1; }
+
+echo
+echo "Une nouvelle partition ext4 'NOXHOME' va etre creee dans l'espace LIBRE de $disk."
+echo "Les partitions existantes ne sont pas modifiees."
+read -r -p "Tape OUI pour continuer : " answer
+[[ "$answer" == "OUI" ]] || { echo "Annule."; exit 1; }
+
+echo "${free_start},,L" | sfdisk --no-reread --append "$disk"
+partx -u "$disk" 2>/dev/null || true
+udevadm settle
+new_part="$(lsblk -lnpo NAME "$disk" | tail -1)"
+echo "Nouvelle partition : $new_part"
+
+mkfs.ext4 -F -L NOXHOME -m 1 "$new_part"
+udevadm settle
+
+tmp_mnt="$(mktemp -d)"
+mount "$new_part" "$tmp_mnt"
+install -d -o 1000 -g 1000 -m 0700 "$tmp_mnt/nox"
+install -d -m 0700 "$tmp_mnt/.nox/state/iwd"
+# Carry over Wi-Fi networks already saved in this session
+cp -a /var/lib/iwd/. "$tmp_mnt/.nox/state/iwd/" 2>/dev/null || true
+umount "$tmp_mnt"; rmdir "$tmp_mnt"
+
+echo
+echo "Partition NOXHOME prete. Redemarre pour l'utiliser : sudo reboot"

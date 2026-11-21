@@ -1,0 +1,9 @@
+[Unit]
+Description=Nox OS performance tuning (CPU governor)
+
+[Service]
+Type=oneshot
+ExecStart=/usr/local/bin/nox-tune
+
+[Install]
+WantedBy=multi-user.target

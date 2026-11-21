@@ -1,0 +1,7 @@
+[Desktop Entry]
+Type=Application
+Name=Roblox (Sober)
+Comment=Roblox via Sober, sur le GPU dedie avec GameMode
+Exec=nox-run flatpak run org.vinegarhq.Sober
+Icon=applications-games
+Categories=Game;

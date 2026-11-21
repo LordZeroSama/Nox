@@ -1,0 +1,5 @@
+XKB_DEFAULT_LAYOUT=fr
+XCURSOR_SIZE=24
+# Prefer native Wayland for Qt apps (Prism Launcher), keep XWayland for Minecraft itself
+QT_QPA_PLATFORM=wayland;xcb
+MOZ_ENABLE_WAYLAND=1

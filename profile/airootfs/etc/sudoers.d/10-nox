@@ -1,0 +1,3 @@
+# Single-user gaming system: the nox user can administrate without password.
+# Remove this file and set a password if the machine is shared.
+nox ALL=(ALL:ALL) NOPASSWD: ALL

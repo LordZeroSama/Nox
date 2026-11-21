@@ -1,0 +1,7 @@
+# Variant "perf"
+linux-zen
+linux-zen-headers
+# Legacy proprietary NVIDIA driver (last branch supporting Maxwell / GTX 900)
+nvidia-580xx-dkms
+nvidia-580xx-utils
+nvidia-prime

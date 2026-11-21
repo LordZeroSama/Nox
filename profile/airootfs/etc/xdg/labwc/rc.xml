@@ -1,0 +1,28 @@
+<?xml version="1.0"?>
+<labwc_config>
+  <core>
+    <!-- Fewer effects, less latency -->
+    <decoration>server</decoration>
+    <gap>0</gap>
+    <adaptiveSync>yes</adaptiveSync>
+  </core>
+  <theme>
+    <cornerRadius>0</cornerRadius>
+    <font><name>DejaVu Sans</name><size>10</size></font>
+  </theme>
+  <keyboard>
+    <default />
+    <!-- Super: app launcher -->
+    <keybind key="Super_L" onRelease="yes"><action name="Execute" command="fuzzel" /></keybind>
+    <keybind key="W-Return"><action name="Execute" command="foot" /></keybind>
+    <keybind key="W-r"><action name="Execute" command="nox-run flatpak run org.vinegarhq.Sober" /></keybind>
+    <keybind key="W-m"><action name="Execute" command="nox-run prismlauncher" /></keybind>
+    <keybind key="W-b"><action name="Execute" command="firefox" /></keybind>
+    <keybind key="W-f"><action name="ToggleFullscreen" /></keybind>
+    <keybind key="W-q"><action name="Close" /></keybind>
+    <keybind key="A-Tab"><action name="NextWindow" /></keybind>
+  </keyboard>
+  <mouse>
+    <default />
+  </mouse>
+</labwc_config>

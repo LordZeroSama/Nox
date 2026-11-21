@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<openbox_menu>
+  <menu id="root-menu" label="Nox OS">
+    <item label="Roblox (Sober)"><action name="Execute" command="nox-run flatpak run org.vinegarhq.Sober" /></item>
+    <item label="Minecraft (Prism Launcher)"><action name="Execute" command="nox-run prismlauncher" /></item>
+    <item label="Navigateur (Firefox)"><action name="Execute" command="firefox" /></item>
+    <separator />
+    <item label="Terminal"><action name="Execute" command="foot" /></item>
+    <item label="Wi-Fi"><action name="Execute" command="foot nox-wifi" /></item>
+    <item label="Infos systeme"><action name="Execute" command="foot sh -c 'nox-info; read -r -p Entree _'" /></item>
+    <item label="Configurer la persistance"><action name="Execute" command="foot sudo nox-setup-home" /></item>
+    <separator />
+    <item label="Redemarrer"><action name="Execute" command="systemctl reboot" /></item>
+    <item label="Eteindre"><action name="Execute" command="systemctl poweroff" /></item>
+  </menu>
+</openbox_menu>

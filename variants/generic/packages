@@ -1,0 +1,4 @@
+# Variant "generic"
+linux
+# NVIDIA through nouveau (slow on old cards but works without proprietary driver)
+vulkan-nouveau

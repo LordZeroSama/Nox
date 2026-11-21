@@ -1,0 +1,19 @@
+#!/usr/bin/env bash
+# Nox OS - launch a game with the best available settings.
+# Usage: nox-run <command> [args...]
+# - uses the discrete NVIDIA GPU when present (PRIME render offload)
+# - enables Feral GameMode
+# - NOX_HUD=1 shows the MangoHud FPS overlay
+set -u
+cmd=("$@")
+
+if command -v gamemoderun >/dev/null; then
+    cmd=(gamemoderun "${cmd[@]}")
+fi
+if command -v prime-run >/dev/null && [[ -e /proc/driver/nvidia/version ]]; then
+    cmd=(prime-run "${cmd[@]}")
+fi
+if [[ "${NOX_HUD:-0}" == "1" ]] && command -v mangohud >/dev/null; then
+    export MANGOHUD=1
+fi
+exec "${cmd[@]}"

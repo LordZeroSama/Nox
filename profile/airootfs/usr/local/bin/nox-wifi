@@ -1,0 +1,15 @@
+#!/usr/bin/env bash
+# Nox OS - minimal Wi-Fi helper around iwctl.
+set -u
+dev="$(iwctl device list 2>/dev/null | awk '/station/ {print $1; exit}')"
+dev="${dev:-wlan0}"
+echo "== Reseaux Wi-Fi visibles ($dev) =="
+iwctl station "$dev" scan
+sleep 3
+iwctl station "$dev" get-networks
+echo
+read -r -p "Nom du reseau (SSID) : " ssid
+[[ -z "$ssid" ]] && exit 0
+iwctl station "$dev" connect "$ssid"
+sleep 3
+iwctl station "$dev" show | grep -E "State|Connected network" || true

@@ -1,0 +1,3 @@
+# Nox OS - session autostart
+# First run: install Sober (Roblox) into the persistent home
+[ -f "$HOME/.local/share/nox/firstrun.done" ] || foot --title "Nox - configuration" nox-firstrun &

@@ -1,0 +1,36 @@
+#!/usr/bin/env bash
+# Nox OS - per-user setup (idempotent). Installs Flatpak apps into the
+# persistent /home so they survive reboots without bloating the image.
+set -u
+state_dir="$HOME/.local/share/nox"
+done_flag="$state_dir/firstrun.done"
+mkdir -p "$state_dir"
+
+echo "=== Nox OS - premiere configuration ==="
+
+if ! findmnt /home >/dev/null; then
+    echo "[!] Aucune partition persistante NOXHOME detectee."
+    echo "    Tes jeux et reglages seront perdus au redemarrage."
+    echo "    Lance : sudo nox-setup-home"
+    echo
+fi
+
+if ! getent hosts flathub.org >/dev/null; then
+    echo "[!] Pas d'Internet. Connecte-toi avec : nox-wifi  (ou un cable Ethernet)"
+    echo "    puis relance : nox-firstrun"
+    read -r -p "Entree pour fermer..." _
+    exit 1
+fi
+
+flatpak remote-add --user --if-not-exists flathub https://dl.flathub.org/repo/flathub.flatpakrepo
+
+echo "--- Installation de Sober (Roblox) ---"
+flatpak install --user -y --noninteractive flathub org.vinegarhq.Sober
+
+# Pulls the Flatpak GL extension matching the host NVIDIA driver, if any.
+flatpak update --user -y --noninteractive
+
+touch "$done_flag"
+echo
+echo "Termine. Lance Roblox depuis le menu (Super) ou : nox-run flatpak run org.vinegarhq.Sober"
+read -r -p "Entree pour fermer..." _

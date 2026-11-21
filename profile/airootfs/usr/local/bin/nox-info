@@ -1,0 +1,13 @@
+#!/usr/bin/env bash
+# Nox OS - quick status report (GPU, RAM, persistence, disk health).
+echo "== Noyau ==";       uname -r
+echo "== Demarrage ==";   grep -o 'copytoram=[yn]' /proc/cmdline || echo "copytoram=?"
+echo "== RAM ==";         free -h
+echo "== Persistance =="; findmnt /home >/dev/null && findmnt -no SOURCE,FSTYPE,SIZE /home || echo "/home en RAM (aucune partition NOXHOME)"
+echo "== GPU ==";         [[ -e /proc/driver/nvidia/version ]] && head -1 /proc/driver/nvidia/version || echo "Pas de pilote NVIDIA charge"
+echo "== Disques (SMART) =="
+for disk in /dev/sd?; do
+    [[ -b "$disk" ]] || continue
+    echo "-- $disk"
+    sudo smartctl -A "$disk" 2>/dev/null | awk '$1==5||$1==197||$1==198 {print "   " $2 " = " $10}'
+done

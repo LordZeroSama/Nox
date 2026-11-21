@@ -1,0 +1,58 @@
+# Nox OS - packages shared by every variant.
+# The kernel and GPU drivers are listed in variants/<name>/packages.
+
+# --- Base system & live boot ---
+base
+mkinitcpio
+mkinitcpio-archiso
+intel-ucode
+amd-ucode
+linux-firmware
+syslinux
+pv
+sudo
+dosfstools
+e2fsprogs
+util-linux
+
+# --- Network ---
+iwd
+wireless-regdb
+
+# --- Memory ---
+zram-generator
+
+# --- Graphics stack (Intel / AMD, also used as display GPU on hybrid laptops) ---
+mesa
+vulkan-intel
+vulkan-radeon
+vulkan-icd-loader
+xorg-xwayland
+
+# --- Audio ---
+pipewire
+pipewire-alsa
+pipewire-pulse
+wireplumber
+
+# --- Session (lightweight Wayland compositor + tools) ---
+labwc
+foot
+fuzzel
+ttf-dejavu
+xdg-desktop-portal
+xdg-desktop-portal-gtk
+xdg-utils
+
+# --- Gaming ---
+flatpak
+gamemode
+mangohud
+
+# --- Apps ---
+prismlauncher
+firefox
+
+# --- Diagnostics ---
+smartmontools
+htop
