@@ -4,4 +4,4 @@ set -euo pipefail
 variant="$1"
 pacman -Syu --noconfirm --needed archiso git base-devel
 cd /build
-./build.sh "$variant" /build/out
+bash ./build.sh "$variant" /build/out

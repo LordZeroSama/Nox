@@ -26,6 +26,14 @@ mkdir -p "$work_root" "$out_dir"
 echo "==> Assembling profile for variant '$variant' (kernel: $NOX_KERNEL)"
 cp -a "$script_dir/profile" "$profile_dir"
 
+# Recreate symlinks (systemd units, timezone, resolv.conf) from the manifest
+while read -r link_target link_path; do
+    [[ -z "$link_target" || "$link_target" == \#* ]] && continue
+    mkdir -p "$(dirname "$profile_dir/$link_path")"
+    ln -sfn "$link_target" "$profile_dir/$link_path"
+done < "$profile_dir/symlinks.txt"
+rm "$profile_dir/symlinks.txt"
+
 # Variant overlay (optional extra files)
 if [[ -d "$variant_dir/airootfs" ]]; then
     cp -a "$variant_dir/airootfs/." "$profile_dir/airootfs/"
@@ -46,7 +54,7 @@ find "$profile_dir/efiboot" "$profile_dir/syslinux" "$profile_dir/profiledef.sh"
 if (( ${#NOX_AUR_PACKAGES[@]} > 0 )); then
     if [[ ! -f "$local_repo/nox-local.db.tar.gz" || "${NOX_REBUILD_AUR:-0}" == "1" ]]; then
         rm -rf "$local_repo"
-        "$script_dir/scripts/build-aur.sh" "$local_repo" "${NOX_AUR_PACKAGES[@]}"
+        bash "$script_dir/scripts/build-aur.sh" "$local_repo" "${NOX_AUR_PACKAGES[@]}"
     fi
     sed -i "s|^#%NOX_LOCALREPO_BLOCK%|[nox-local]\nSigLevel = Optional TrustAll\nServer = file://${local_repo}|" \
         "$profile_dir/pacman.conf"
