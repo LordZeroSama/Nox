@@ -99,3 +99,10 @@ docs/                     guides
   méthode « fichiers extraits sur FAT32 » (UEFI uniquement).
 - L'utilisateur `nox` a `sudo` sans mot de passe (machine personnelle). Supprimer
   `/etc/sudoers.d/10-nox` si le PC est partagé.
+
+## Dépannage
+
+- **Console de secours** : `Ctrl + Alt + F2`, identifiant `nox`, mot de passe `nox`.
+- **Journal de la session graphique** : `cat /tmp/labwc.log`
+- **PC hybride (Intel + NVIDIA)** : le bureau s'affiche sur le GPU relié à l'écran,
+  les jeux lancés avec `nox-run` utilisent la NVIDIA.
