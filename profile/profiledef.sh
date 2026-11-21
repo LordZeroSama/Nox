@@ -9,9 +9,9 @@ iso_publisher="Ateliers Nox Aeterna"
 iso_application="Nox OS - portable gaming system"
 iso_version="$(date --date="@${SOURCE_DATE_EPOCH:-$(date +%s)}" +%Y.%m.%d)"
 install_dir="nox"
-# BIOS boot kept for older PCs; UEFI uses systemd-boot (works from extracted files on FAT32).
+# BIOS boot kept for older PCs; UEFI uses GRUB (systemd-boot dropped back to firmware setup on the ASUS K501LX).
 bootmodes=('bios.syslinux'
-           'uefi.systemd-boot')
+           'uefi.grub')
 pacman_conf="pacman.conf"
 # zstd: slightly bigger than xz but much faster to decompress -> faster boot on weak CPUs.
 airootfs_image_type="squashfs"

@@ -45,7 +45,7 @@ grep -hvE '^\s*(#|$)' "$profile_dir/packages.common" "$variant_dir/packages" \
 rm "$profile_dir/packages.common"
 
 # Placeholders in boot menus and profiledef
-find "$profile_dir/efiboot" "$profile_dir/syslinux" "$profile_dir/profiledef.sh" -type f -exec sed -i \
+find "$profile_dir/grub" "$profile_dir/syslinux" "$profile_dir/profiledef.sh" -type f -exec sed -i \
     -e "s|%NOX_KERNEL%|${NOX_KERNEL}|g" \
     -e "s|%NOX_VARIANT%|${variant}|g" \
     -e "s|%NOX_KERNEL_PARAMS%|${NOX_KERNEL_PARAMS}|g" {} +
