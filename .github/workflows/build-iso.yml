@@ -44,9 +44,9 @@ jobs:
         env:
           GH_TOKEN: ${{ github.token }}
         run: |
+          sudo chown -R "$(id -u):$(id -g)" out
           cd out
           iso="$(ls nox-os-*.iso)"
-          sudo chown "$(id -u)" "$iso"
           tag="${{ inputs.variant }}-$(date -u +%Y%m%d-%H%M)"
           sha256sum "$iso" | awk '{print $1}' > "$iso.sha256"
           split -b 1900M -d -a 2 "$iso" "$iso.part"
