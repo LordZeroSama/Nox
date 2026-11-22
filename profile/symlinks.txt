@@ -11,3 +11,4 @@
 /usr/lib/systemd/system/systemd-networkd.service airootfs/etc/systemd/system/multi-user.target.wants/systemd-networkd.service
 /usr/lib/systemd/system/systemd-networkd-wait-online.service airootfs/etc/systemd/system/network-online.target.wants/systemd-networkd-wait-online.service
 /etc/systemd/system/nox-rescue-password.service airootfs/etc/systemd/system/multi-user.target.wants/nox-rescue-password.service
+/etc/systemd/system/nox-wifi-restore.service airootfs/etc/systemd/system/multi-user.target.wants/nox-wifi-restore.service

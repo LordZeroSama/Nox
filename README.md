@@ -35,7 +35,9 @@ Menu de démarrage :
 
 ## Contenu
 
-- Session : **labwc** (Wayland, très léger) + `foot` (terminal) + `fuzzel` (lanceur)
+- Accueil : **Nox Home**, interface plein écran façon console (vignettes inclinées,
+  clavier/souris), écrite en C++/QML dans `packages/nox-home/`. Elle se met en pause pendant les jeux.
+- Session : **labwc** (Wayland, très léger) + `foot` (terminal) + `fuzzel` (recherche d'apps)
 - Jeux : **Sober** (Roblox, Flatpak installé au premier démarrage), **Prism Launcher** (Minecraft, Java téléchargé par Prism)
 - Navigateur : Firefox
 - Perf : GameMode, MangoHud, zram (swap compressé en RAM), gouverneur CPU `performance`, journaux en RAM
@@ -45,7 +47,9 @@ Menu de démarrage :
 
 | Touche | Action |
 |---|---|
-| `Super` | Lanceur d'applications |
+| `Super` | Revenir à l'accueil Nox |
+| `Super + Espace` | Rechercher une application |
+| `◀ ▶` / `Entrée` / `Échap` | Naviguer dans l'accueil, lancer, revenir |
 | `Super + R` | Roblox |
 | `Super + M` | Minecraft (Prism) |
 | `Super + B` | Firefox |
@@ -73,6 +77,22 @@ Deux options : voir [`docs/BUILD.md`](docs/BUILD.md).
 ## Installer sur le disque externe
 
 Depuis Windows : voir [`docs/INSTALL-WINDOWS.md`](docs/INSTALL-WINDOWS.md).
+Mises à jour : double-clic sur [`windows/Mettre-a-jour-Nox.bat`](windows/Mettre-a-jour-Nox.bat).
+
+## Ajouter une vignette à l'accueil
+
+Crée un fichier `~/.config/nox-home/apps/50-mon-jeu.conf` (persistant) :
+
+```ini
+[App]
+Name=Mon jeu
+Subtitle=Description courte
+Exec=nox-run commande-du-jeu
+Color=#534ab7
+Image=mon-jeu.png
+```
+
+L'image (chemin relatif au fichier) sert de fond à la vignette. Les vignettes sont triées par nom de fichier.
 
 ## Structure du dépôt
 
@@ -85,7 +105,9 @@ profile/                  profil archiso commun (dérivé de "baseline")
   efiboot/ syslinux/      menus de démarrage UEFI / BIOS
   airootfs/               fichiers copiés dans le système
 variants/<nom>/           variant.conf (noyau, paramètres) + packages
-scripts/build-aur.sh      compile les paquets AUR dans un dépôt local
+packages/nox-home/        interface d'accueil (C++/QML)
+scripts/build-repo.sh     compile les paquets Nox et AUR dans un dépôt local
+windows/                  script de mise à jour depuis Windows
 ci/ .github/workflows/    build automatique sur GitHub
 docs/                     guides
 ```

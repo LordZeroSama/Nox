@@ -1,6 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <openbox_menu>
   <menu id="root-menu" label="Nox OS">
+    <item label="Accueil Nox"><action name="Execute" command="nox-home" /></item>
+    <separator />
     <item label="Roblox (Sober)"><action name="Execute" command="nox-run flatpak run org.vinegarhq.Sober" /></item>
     <item label="Minecraft (Prism Launcher)"><action name="Execute" command="nox-run prismlauncher" /></item>
     <item label="Navigateur (Firefox)"><action name="Execute" command="firefox" /></item>

@@ -1,0 +1,18 @@
+# Nox OS - console-style home screen (built from this repository)
+pkgname=nox-home
+pkgver=0.1.0
+pkgrel=1
+pkgdesc="Nox OS console-style fullscreen home screen"
+arch=(x86_64)
+license=(MIT)
+depends=(qt6-base qt6-declarative qt6-wayland)
+makedepends=(cmake)
+
+build() {
+    cmake -S "$startdir/src" -B build -DCMAKE_INSTALL_PREFIX=/usr -DCMAKE_BUILD_TYPE=Release
+    cmake --build build
+}
+
+package() {
+    DESTDIR="$pkgdir" cmake --install build
+}

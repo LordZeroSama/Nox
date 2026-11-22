@@ -1,0 +1,12 @@
+[Unit]
+Description=Nox OS - restore saved Wi-Fi networks from the persistent partition
+After=local-fs.target
+Before=iwd.service
+ConditionPathIsDirectory=/home/.nox/state/iwd
+
+[Service]
+Type=oneshot
+ExecStart=/bin/sh -c 'mkdir -p /var/lib/iwd && cp -a /home/.nox/state/iwd/. /var/lib/iwd/ || true'
+
+[Install]
+WantedBy=multi-user.target

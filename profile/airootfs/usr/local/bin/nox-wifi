@@ -13,3 +13,10 @@ read -r -p "Nom du reseau (SSID) : " ssid
 iwctl station "$dev" connect "$ssid"
 sleep 3
 iwctl station "$dev" show | grep -E "State|Connected network" || true
+
+# Save known networks on the persistent partition (if present)
+if findmnt /home >/dev/null; then
+    sudo mkdir -p /home/.nox/state/iwd
+    sudo cp -a /var/lib/iwd/. /home/.nox/state/iwd/ 2>/dev/null || true
+fi
+read -r -p "Entree pour fermer..." _

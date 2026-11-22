@@ -46,6 +46,7 @@ xdg-desktop-portal-gtk
 xdg-utils
 
 # --- Gaming ---
+nox-home
 flatpak
 gamemode
 mangohud

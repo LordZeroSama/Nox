@@ -57,7 +57,13 @@ Si le PC ne voit pas le disque : vérifie que le mode **UEFI** est actif et que
 3. Redémarre. Au démarrage suivant, Sober (Roblox) s'installe automatiquement dans `NOXHOME`.
 4. Lance Roblox avec `Super + R` et connecte-toi.
 
-## Mettre à jour l'OS
+## Mettre à jour l'OS (automatique)
 
-Remplace le contenu de `N:\` par la nouvelle ISO extraite. `NOXHOME` (jeux, réglages)
-n'est pas touché.
+1. Télécharge [`windows/Mettre-a-jour-Nox.bat`](../windows/Mettre-a-jour-Nox.bat)
+   (bouton « Download raw file ») et place-le où tu veux, par exemple sur le Bureau ou à la racine de `N:\`.
+2. Branche le disque Nox et double-clique sur le fichier (accepte la demande administrateur).
+3. Le script compare ta version à la dernière publiée sur GitHub, télécharge l'ISO
+   (reprise possible si la connexion coupe), vérifie son intégrité et remplace le contenu
+   de `NOXBOOT`. `NOXHOME` (jeux, réglages) n'est pas touché.
+
+La version installée est notée dans `N:\nox-release.txt`.

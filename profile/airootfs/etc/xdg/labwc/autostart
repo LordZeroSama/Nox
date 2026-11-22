@@ -1,5 +1,7 @@
 # Nox OS - session autostart
 # External screen connected: turn off the laptop panel
 nox-displays
+# Console-style home screen (Super brings it back)
+nox-home &
 # First run: install Sober (Roblox) into the persistent home
 [ -f "$HOME/.local/share/nox/firstrun.done" ] || foot --title "Nox - configuration" nox-firstrun &

@@ -1,0 +1,7 @@
+<RCC>
+    <qresource prefix="/">
+        <file>qml/Main.qml</file>
+        <file>qml/Tile.qml</file>
+        <file>qml/SettingsPanel.qml</file>
+    </qresource>
+</RCC>

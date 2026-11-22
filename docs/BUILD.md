@@ -9,7 +9,8 @@
    ```
 2. Sur GitHub, ouvre **Actions**, puis **Build Nox OS ISO**, puis **Run workflow**, et choisis `perf`.
 3. Attends la fin (30 à 60 min : la compilation du pilote NVIDIA prend du temps).
-4. Télécharge l'artefact `nox-os-perf` (un .zip qui contient l'ISO).
+4. L'ISO est publiée dans **Releases** (en plusieurs parties) : utilise
+   `windows/Mettre-a-jour-Nox.bat` pour l'installer automatiquement.
 
 Remarques :
 - Dépôt privé : le build consomme des minutes du quota gratuit d'Actions. Un dépôt public
@@ -24,8 +25,7 @@ sudo ./build.sh perf          # ou: generic
 # ISO dans ./out/
 ```
 
-- Le dépôt AUR local est mis en cache dans `work/perf/localrepo`.
-  Pour forcer la recompilation : `sudo NOX_REBUILD_AUR=1 ./build.sh perf`
+- Les paquets Nox (`packages/*`) et AUR sont recompilés à chaque build dans `work/<variante>/localrepo`.
 - Espace disque nécessaire : ~10 Go dans `work/`.
 
 ## Tester sans disque externe

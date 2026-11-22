@@ -50,17 +50,15 @@ find "$profile_dir/efiboot" "$profile_dir/syslinux" "$profile_dir/profiledef.sh"
     -e "s|%NOX_VARIANT%|${variant}|g" \
     -e "s|%NOX_KERNEL_PARAMS%|${NOX_KERNEL_PARAMS}|g" {} +
 
-# Local AUR repository (only for variants that need it)
-if (( ${#NOX_AUR_PACKAGES[@]} > 0 )); then
-    if [[ ! -f "$local_repo/nox-local.db.tar.gz" || "${NOX_REBUILD_AUR:-0}" == "1" ]]; then
-        rm -rf "$local_repo"
-        bash "$script_dir/scripts/build-aur.sh" "$local_repo" "${NOX_AUR_PACKAGES[@]}"
-    fi
-    sed -i "s|^#%NOX_LOCALREPO_BLOCK%|[nox-local]\nSigLevel = Optional TrustAll\nServer = file://${local_repo}|" \
-        "$profile_dir/pacman.conf"
-else
-    sed -i '/%NOX_LOCALREPO_BLOCK%/d' "$profile_dir/pacman.conf"
-fi
+# Local repository: packages from this repo (packages/*) + AUR packages of the variant
+repo_entries=("$script_dir"/packages/*/)
+for aur_name in "${NOX_AUR_PACKAGES[@]}"; do
+    repo_entries+=("aur:$aur_name")
+done
+rm -rf "$local_repo"
+bash "$script_dir/scripts/build-repo.sh" "$local_repo" "${repo_entries[@]}"
+sed -i "s|^#%NOX_LOCALREPO_BLOCK%|[nox-local]\nSigLevel = Optional TrustAll\nServer = file://${local_repo}|" \
+    "$profile_dir/pacman.conf"
 
 echo "==> Running mkarchiso"
 mkarchiso -v -r -w "$work_root/mkarchiso" -o "$out_dir" "$profile_dir"
