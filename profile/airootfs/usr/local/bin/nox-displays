@@ -1,0 +1,19 @@
+#!/usr/bin/env bash
+# Nox OS - when an external display is connected, turn off the laptop's
+# internal panel (eDP/LVDS/DSI) so the whole desktop goes to the external screen.
+# Without external display nothing changes. Set NOX_KEEP_INTERNAL=1 to disable.
+set -u
+[[ "${NOX_KEEP_INTERNAL:-0}" == "1" ]] && exit 0
+command -v wlr-randr >/dev/null || exit 0
+
+mapfile -t outputs < <(wlr-randr 2>/dev/null | awk '/^[^ ]/ {print $1}')
+internal=() external=()
+for name in "${outputs[@]}"; do
+    if [[ "$name" =~ ^(eDP|LVDS|DSI) ]]; then internal+=("$name"); else external+=("$name"); fi
+done
+
+if (( ${#external[@]} > 0 )); then
+    for name in "${internal[@]}"; do
+        wlr-randr --output "$name" --off
+    done
+fi

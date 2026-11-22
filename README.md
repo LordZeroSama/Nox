@@ -104,5 +104,7 @@ docs/                     guides
 
 - **Console de secours** : `Ctrl + Alt + F2`, identifiant `nox`, mot de passe `nox`.
 - **Journal de la session graphique** : `cat /tmp/labwc.log`
+- **Écran externe** : s'il est branché, l'écran du portable est éteint automatiquement
+  (`NOX_KEEP_INTERNAL=1` pour le garder).
 - **PC hybride (Intel + NVIDIA)** : le bureau s'affiche sur le GPU relié à l'écran,
   les jeux lancés avec `nox-run` utilisent la NVIDIA.
