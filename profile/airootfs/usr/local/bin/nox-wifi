@@ -1,8 +1,18 @@
 #!/usr/bin/env bash
 # Nox OS - minimal Wi-Fi helper around iwctl.
 set -u
-dev="$(iwctl device list 2>/dev/null | awk '/station/ {print $1; exit}')"
-dev="${dev:-wlan0}"
+# Wireless interface name straight from the kernel (iwctl output has colour codes)
+dev=""
+for wireless_dir in /sys/class/net/*/wireless; do
+    [[ -d "$wireless_dir" ]] && { dev="$(basename "$(dirname "$wireless_dir")")"; break; }
+done
+if [[ -z "$dev" ]]; then
+    echo "Aucune carte Wi-Fi detectee."
+    echo "Verifie le bouton/raccourci Wi-Fi du PC (mode avion), puis : rfkill"
+    read -r -p "Entree pour fermer..." _
+    exit 1
+fi
+rfkill unblock wlan 2>/dev/null || true
 echo "== Reseaux Wi-Fi visibles ($dev) =="
 iwctl station "$dev" scan
 sleep 3

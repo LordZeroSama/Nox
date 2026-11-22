@@ -159,7 +159,7 @@ Window {
         x: 96 * root.unit
         anchors.bottom: parent.bottom
         anchors.bottomMargin: 44 * root.unit
-        text: "◀ ▶  choisir      Entrée  lancer      Super  revenir ici"
+        text: "◀ ▶  choisir      Entrée  lancer      Touche Windows  revenir ici"
         color: "#888399"
         font.pixelSize: 18 * root.unit
     }
