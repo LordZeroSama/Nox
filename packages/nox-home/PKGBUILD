@@ -1,4 +1,5 @@
-# Nox OS - console-style home screen (built from this repository)
+# Nox OS - console-style home screen (built from this repository).
+# Sources live in code/ (makepkg reserves src/ for its own build tree).
 pkgname=nox-home
 pkgver=0.1.0
 pkgrel=1
@@ -9,7 +10,7 @@ depends=(qt6-base qt6-declarative qt6-wayland)
 makedepends=(cmake)
 
 build() {
-    cmake -S "$startdir/src" -B build -DCMAKE_INSTALL_PREFIX=/usr -DCMAKE_BUILD_TYPE=Release
+    cmake -S "$startdir/code" -B build -DCMAKE_INSTALL_PREFIX=/usr -DCMAKE_BUILD_TYPE=Release
     cmake --build build
 }
 

@@ -36,7 +36,7 @@ Menu de démarrage :
 ## Contenu
 
 - Accueil : **Nox Home**, interface plein écran façon console (vignettes inclinées,
-  clavier/souris), écrite en C++/QML dans `packages/nox-home/`. Elle se met en pause pendant les jeux.
+  clavier/souris), écrite en C++/QML dans `packages/nox-home/code/`. Elle se met en pause pendant les jeux.
 - Session : **labwc** (Wayland, très léger) + `foot` (terminal) + `fuzzel` (recherche d'apps)
 - Jeux : **Sober** (Roblox, Flatpak installé au premier démarrage), **Prism Launcher** (Minecraft, Java téléchargé par Prism)
 - Navigateur : Firefox
