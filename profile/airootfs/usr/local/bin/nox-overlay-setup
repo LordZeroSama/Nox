@@ -1,0 +1,17 @@
+#!/usr/bin/env bash
+# Nox OS - make the MangoHud overlay available to a Flatpak app (default: Sober).
+# Installs the MangoHud Vulkan layer matching the app's runtime and lets the
+# app read the overlay settings written by Nox Home. Idempotent.
+set -euo pipefail
+app_id="${1:-org.vinegarhq.Sober}"
+
+flatpak info --user "$app_id" >/dev/null 2>&1 || exit 0
+# Runtime looks like "org.freedesktop.Platform/x86_64/24.08" -> branch 24.08
+runtime="$(flatpak info --user --show-runtime "$app_id")"
+branch="${runtime##*/}"
+extension="org.freedesktop.Platform.VulkanLayer.MangoHud//$branch"
+
+if ! flatpak info --user "$extension" >/dev/null 2>&1; then
+    flatpak install --user -y --noninteractive flathub "$extension"
+fi
+flatpak override --user --filesystem=xdg-config/MangoHud:ro "$app_id"

@@ -2,6 +2,7 @@
 #pragma once
 
 #include <QObject>
+#include <QMap>
 #include <QStringList>
 #include <QTimer>
 #include <QVariantList>
@@ -14,6 +15,8 @@ class Launcher : public QObject
     Q_PROPERTY(bool busy READ busy NOTIFY busyChanged)
     Q_PROPERTY(int signalBars READ signalBars NOTIFY onlineChanged)
     Q_PROPERTY(QStringList storage READ storage NOTIFY storageChanged)
+    Q_PROPERTY(bool overlayEnabled READ overlayEnabled WRITE setOverlayEnabled NOTIFY overlayChanged)
+    Q_PROPERTY(QVariantList overlayOptions READ overlayOptions NOTIFY overlayChanged)
 
 public:
     explicit Launcher(QObject *parent = nullptr);
@@ -23,6 +26,11 @@ public:
     bool busy() const { return m_busy; }
     int signalBars() const { return m_signalBars; }
     QStringList storage() const { return m_storage; }
+    bool overlayEnabled() const { return m_overlayEnabled; }
+    void setOverlayEnabled(bool enabled);
+    QVariantList overlayOptions() const;
+    // Toggle one performance overlay item (MangoHud parameter name).
+    Q_INVOKABLE void toggleOverlayOption(const QString &key);
 
     // Launch the app at index: it opens fullscreen on top of the home screen,
     // which comes back to the front when the app exits.
@@ -38,12 +46,15 @@ signals:
     void onlineChanged();
     void busyChanged();
     void storageChanged();
+    void overlayChanged();
     void showRequested();
     void launchFailed(const QString &name);
 
 private:
     void refreshOnline();
     void refreshStorage();
+    void loadOverlay();
+    void saveOverlay() const;
     void setBusy(bool busy);
 
     QVariantList m_apps;
@@ -51,5 +62,7 @@ private:
     bool m_busy = false;
     int m_signalBars = 0; // 0-4, wired connection = 4
     QStringList m_storage;
+    bool m_overlayEnabled = false;
+    QMap<QString, bool> m_overlayItems; // MangoHud parameter -> shown
     QTimer m_statusTimer;
 };

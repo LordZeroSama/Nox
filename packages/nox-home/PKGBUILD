@@ -1,7 +1,7 @@
 # Nox OS - console-style home screen (built from this repository).
 # Sources live in code/ (makepkg reserves src/ for its own build tree).
 pkgname=nox-home
-pkgver=0.2.0
+pkgver=0.3.0
 pkgrel=1
 pkgdesc="Nox OS console-style fullscreen home screen"
 arch=(x86_64)

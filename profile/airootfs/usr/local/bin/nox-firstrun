@@ -30,7 +30,10 @@ flatpak install --user -y --noninteractive flathub org.vinegarhq.Sober
 # Pulls the Flatpak GL extension matching the host NVIDIA driver, if any.
 flatpak update --user -y --noninteractive
 
+echo "--- Overlay de performance (MangoHud) pour Roblox ---"
+nox-overlay-setup org.vinegarhq.Sober || echo "[!] Overlay non installe (reessaye plus tard)"
+
 touch "$done_flag"
 echo
-echo "Termine. Lance Roblox depuis le menu (Super) ou : nox-run flatpak run org.vinegarhq.Sober"
+echo "Termine. Lance Roblox depuis l'accueil Nox (touche Windows pour y revenir)."
 read -r -p "Entree pour fermer..." _

@@ -40,7 +40,7 @@ Menu de démarrage :
 - Session : **labwc** (Wayland, très léger) + `foot` (terminal) + `fuzzel` (recherche d'apps)
 - Jeux : **Sober** (Roblox, Flatpak installé au premier démarrage), **Prism Launcher** (Minecraft, Java téléchargé par Prism)
 - Navigateur : Firefox
-- Perf : GameMode, MangoHud, zram (swap compressé en RAM), gouverneur CPU `performance`, journaux en RAM
+- Perf : GameMode, overlay MangoHud réglable dans Paramètres (FPS, CPU/GPU + températures, RAM, VRAM), zram (swap compressé en RAM), gouverneur CPU `performance`, journaux en RAM
 - Initramfs **sans `autodetect`** : l'image démarre sur d'autres PC
 
 ### Raccourcis
@@ -64,7 +64,8 @@ Menu de démarrage :
 | `nox-wifi` | Se connecter au Wi-Fi |
 | `sudo nox-setup-home` | Créer la partition persistante `NOXHOME` dans l'espace libre du disque Nox |
 | `nox-firstrun` | (Ré)installer Sober et les extensions Flatpak |
-| `nox-run <cmd>` | Lancer un jeu sur le GPU dédié + GameMode (`NOX_HUD=1` affiche les FPS) |
+| `nox-run <cmd>` | Lancer un jeu sur le GPU dédié + GameMode (+ overlay si activé) |
+| `nox-overlay-setup [app]` | Installer l'overlay MangoHud pour une app Flatpak (Sober par défaut) |
 | `nox-info` | État : noyau, RAM, GPU, persistance, santé SMART des disques |
 
 ## Construire l'ISO

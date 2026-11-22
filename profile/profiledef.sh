@@ -27,4 +27,5 @@ file_permissions=(
   ["/usr/local/bin/nox-tune"]="0:0:755"
   ["/usr/local/bin/nox-info"]="0:0:755"
   ["/usr/local/bin/nox-displays"]="0:0:755"
+  ["/usr/local/bin/nox-overlay-setup"]="0:0:755"
 )

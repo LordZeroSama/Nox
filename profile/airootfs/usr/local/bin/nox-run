@@ -3,17 +3,28 @@
 # Usage: nox-run <command> [args...]
 # - uses the discrete NVIDIA GPU when present (PRIME render offload)
 # - enables Feral GameMode
-# - NOX_HUD=1 shows the MangoHud FPS overlay
+# - shows the MangoHud performance overlay when it is turned on in
+#   Nox Home (Parametres > Overlay de performance)
 set -u
 cmd=("$@")
+overlay_flag="${XDG_CONFIG_HOME:-$HOME/.config}/nox/overlay-enabled"
+mangohud_conf="${XDG_CONFIG_HOME:-$HOME/.config}/MangoHud/MangoHud.conf"
+
+if [[ -f "$overlay_flag" ]]; then
+    if [[ "${cmd[0]:-}" == "flatpak" && "${cmd[1]:-}" == "run" ]]; then
+        # Flatpak apps: MangoHud comes from the Flatpak Vulkan layer extension
+        app_id="${cmd[-1]}"
+        nox-overlay-setup "$app_id" >/dev/null 2>&1 || true
+        cmd=(flatpak run --env=MANGOHUD=1 --env=MANGOHUD_CONFIGFILE="$mangohud_conf" "${cmd[@]:2}")
+    elif command -v mangohud >/dev/null; then
+        cmd=(mangohud "${cmd[@]}")
+    fi
+fi
 
 if command -v gamemoderun >/dev/null; then
     cmd=(gamemoderun "${cmd[@]}")
 fi
 if command -v prime-run >/dev/null && [[ -e /proc/driver/nvidia/version ]]; then
     cmd=(prime-run "${cmd[@]}")
-fi
-if [[ "${NOX_HUD:-0}" == "1" ]] && command -v mangohud >/dev/null; then
-    export MANGOHUD=1
 fi
 exec "${cmd[@]}"
