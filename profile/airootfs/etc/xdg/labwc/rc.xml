@@ -26,4 +26,20 @@
   <mouse>
     <default />
   </mouse>
+  <!-- Apps launched from Nox Home open fullscreen and borderless on top of it -->
+  <windowRules>
+    <windowRule identifier="nox-home" serverDecoration="no" />
+    <windowRule identifier="org.vinegarhq.Sober" serverDecoration="no">
+      <action name="ToggleFullscreen" />
+    </windowRule>
+    <windowRule identifier="org.prismlauncher.PrismLauncher" serverDecoration="no">
+      <action name="ToggleFullscreen" />
+    </windowRule>
+    <windowRule title="Minecraft*" serverDecoration="no">
+      <action name="ToggleFullscreen" />
+    </windowRule>
+    <windowRule identifier="firefox" serverDecoration="no">
+      <action name="ToggleFullscreen" />
+    </windowRule>
+  </windowRules>
 </labwc_config>

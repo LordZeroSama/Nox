@@ -51,10 +51,21 @@ Window {
         anchors.rightMargin: 64 * root.unit
         y: 44 * root.unit
         spacing: 28 * root.unit
-        Text {
-            text: launcher.online ? "En ligne" : "Hors ligne"
-            color: launcher.online ? "#9fe1cb" : "#888399"
-            font.pixelSize: 22 * root.unit
+        // Network signal: 4 bars (wired = full), dimmed when offline
+        Row {
+            anchors.verticalCenter: parent.verticalCenter
+            spacing: 4 * root.unit
+            Repeater {
+                model: 4
+                delegate: Rectangle {
+                    required property int index
+                    width: 6 * root.unit
+                    height: (8 + index * 6) * root.unit
+                    radius: 1.5 * root.unit
+                    anchors.bottom: parent.bottom
+                    color: index < launcher.signalBars ? "#eeedfe" : "#3c3a52"
+                }
+            }
         }
         Text {
             id: clock
@@ -162,6 +173,26 @@ Window {
         text: "◀ ▶  choisir      Entrée  lancer      Touche Windows  revenir ici"
         color: "#888399"
         font.pixelSize: 18 * root.unit
+    }
+
+    // ---- Storage (bottom right) -----------------------------------------
+    Column {
+        anchors.right: parent.right
+        anchors.rightMargin: 64 * root.unit
+        anchors.bottom: parent.bottom
+        anchors.bottomMargin: 44 * root.unit
+        spacing: 6 * root.unit
+        Repeater {
+            model: launcher.storage
+            delegate: Text {
+                required property string modelData
+                anchors.right: parent.right
+                text: modelData
+                color: "#a9a4cf"
+                font.pixelSize: 18 * root.unit
+                font.family: "DejaVu Sans Mono"
+            }
+        }
     }
 
     Text {

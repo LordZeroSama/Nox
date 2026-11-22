@@ -61,7 +61,6 @@ int main(int argc, char *argv[])
         }
     });
     QObject::connect(&launcher, &Launcher::showRequested, window, showHome);
-    QObject::connect(&launcher, &Launcher::hideRequested, window, &QWindow::hide);
 
     showHome();
     return app.exec();
